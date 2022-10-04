@@ -41,8 +41,7 @@ namespace c4_model_design
             conductor.Uses(monitoringSystem, "Realizan viajes para clientes");
 
             monitoringSystem.Uses(cabs, "Este servicio tiene varias instancias de un microservicio que registra la geolocalización de los conductores cada4 segundos para hacer coincidir la ubicación del pasajero con los conductores más cercanos que tengan alcanceal lugar de destino. La información se deja en un broker Apache Kafka que va registrando la geolocalización delconductor en tiempo real. ");
-            monitoringSystem.Uses(disco, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
-            monitoringSystem.Uses(riders, "Usa la API de google maps");
+            monitoringSystem.Uses(riders, "Este servicio está compuesto por varias instancias de un microservicio que deja la información en un brokeApache Kafka que registra la geolocalización de un pasajero que solicita un servicio Uber (lugar de recojo) y laeolocalización del lugar de destino. ");
             monitoringSystem.Uses(disco, "Este microservicio se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacerla oferta de servicios para que sea tomada por el conductor. ");
             monitoringSystem.Uses(s3, "calcula ladistancia del pasajero a los conductores más cercanos");
             monitoringSystem.Uses(almacenamiento, "bases de datos deben tener capacidad para escalar horizontalmente, de esta manera Uber puede agregarmás servidores.");
@@ -89,13 +88,13 @@ namespace c4_model_design
             Container webApplication = monitoringSystem.AddContainer("App Conductores", "app para los conductores.", "Java y Scala");
             Container landingPage = monitoringSystem.AddContainer("Centro de activación presencial", "", "Python");
             Container apiRest = monitoringSystem.AddContainer("API Rest", "API Rest", "NodeJS (NestJS) port 8080");
-            Container flightPlanningContext = monitoringSystem.AddContainer("Monitoring Context", "Bounded Context del Microservicio de Planificación de Vuelos", "NodeJS (NestJS)");
+            Container flightPlanningContext = monitoringSystem.AddContainer("Bussines Context", "Bounded Context del Microservicio de Planificación de viajes", "NodeJS (NestJS)");
           //  Container airportContext = monitoringSystem.AddContainer("Airport Context", "Bounded Context del Microservicio de información de Aeropuertos", "NodeJS (NestJS)");
            // Container aircraftInventoryContext = monitoringSystem.AddContainer("Aircraft Inventory Context", "Bounded Context del Microservicio de Inventario de Aviones", "NodeJS (NestJS)");
-            Container vaccinesInventoryContext = monitoringSystem.AddContainer("Security Context", "Bounded Context del Microservicio de Inventario de Vacunas", "NodeJS (NestJS)");
-            Container monitoringContext = monitoringSystem.AddContainer("Payments Context", "Bounded Context del Microservicio de Monitoreo en tiempo real del status y ubicación del vuelo que transporta las vacunas", "NodeJS (NestJS)");
-            Container database = monitoringSystem.AddContainer("Database Core ", "", "Oracle");
-            Container databasePayment = monitoringSystem.AddContainer("Database Payment", "", "Oracle");
+            Container vaccinesInventoryContext = monitoringSystem.AddContainer("Security Context", "Bounded Context del Microservicio de Seguridad de datos", "NodeJS (NestJS)");
+            Container monitoringContext = monitoringSystem.AddContainer("Payments Context", "Bounded Context del Microservicio de Pagos y tranferencias ", "NodeJS (NestJS)");
+            Container database = monitoringSystem.AddContainer("Database Payment ", "", "Oracle");
+            Container databasePayment = monitoringSystem.AddContainer("Database Context", "", "Oracle");
             Container databaseSecurity = monitoringSystem.AddContainer("Database Security", "", "Oracle");
 
             
@@ -162,9 +161,9 @@ namespace c4_model_design
             Component domainLayer = monitoringContext.AddComponent("Domain Layer", "", "NodeJS (NestJS)");
             Component monitoringController = monitoringContext.AddComponent("Riders Controller", "REST API endpoints de monitoreo.", "NodeJS (NestJS) REST Controller");
             Component monitoringApplicationService = monitoringContext.AddComponent("Riders Service", "Provee métodos para el monitoreo, pertenece a la capa Application de DDD", "NestJS Component");
-            Component flightRepository = monitoringContext.AddComponent("Transaction Repository", "Información del vuelo", "NestJS Component");
-            Component vaccineLoteRepository = monitoringContext.AddComponent("Procces Repository", "Información de lote de vacunas", "NestJS Component");
-            Component locationRepository = monitoringContext.AddComponent("Location Repository", "Ubicación del vuelo", "NestJS Component");
+            Component flightRepository = monitoringContext.AddComponent("Transaction Repository", "Información del viaje", "NestJS Component");
+            Component vaccineLoteRepository = monitoringContext.AddComponent("Procces Repository", "Información del estado del viaje", "NestJS Component");
+            Component locationRepository = monitoringContext.AddComponent("Location Repository", "Ubicación del viaje", "NestJS Component");
             Component aircraftSystemFacade = monitoringContext.AddComponent("Broker Repository", "", "NestJS Component");
 
             apiRest.Uses(monitoringController, "", "JSON/HTTPS");
