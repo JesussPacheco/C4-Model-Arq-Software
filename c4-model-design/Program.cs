@@ -89,11 +89,11 @@ namespace c4_model_design
             Container webApplication = monitoringSystem.AddContainer("App Conductores", "app para los conductores.", "Java y Scala");
             Container landingPage = monitoringSystem.AddContainer("Centro de activación presencial", "", "Python");
             Container apiRest = monitoringSystem.AddContainer("API Rest", "API Rest", "NodeJS (NestJS) port 8080");
-            Container flightPlanningContext = monitoringSystem.AddContainer("Flight Planning Context", "Bounded Context del Microservicio de Planificación de Vuelos", "NodeJS (NestJS)");
-            Container airportContext = monitoringSystem.AddContainer("Airport Context", "Bounded Context del Microservicio de información de Aeropuertos", "NodeJS (NestJS)");
-            Container aircraftInventoryContext = monitoringSystem.AddContainer("Aircraft Inventory Context", "Bounded Context del Microservicio de Inventario de Aviones", "NodeJS (NestJS)");
-            Container vaccinesInventoryContext = monitoringSystem.AddContainer("Vaccines Inventory Context", "Bounded Context del Microservicio de Inventario de Vacunas", "NodeJS (NestJS)");
-            Container monitoringContext = monitoringSystem.AddContainer("Monitoring Context", "Bounded Context del Microservicio de Monitoreo en tiempo real del status y ubicación del vuelo que transporta las vacunas", "NodeJS (NestJS)");
+            Container flightPlanningContext = monitoringSystem.AddContainer("Monitoring Context", "Bounded Context del Microservicio de Planificación de Vuelos", "NodeJS (NestJS)");
+          //  Container airportContext = monitoringSystem.AddContainer("Airport Context", "Bounded Context del Microservicio de información de Aeropuertos", "NodeJS (NestJS)");
+           // Container aircraftInventoryContext = monitoringSystem.AddContainer("Aircraft Inventory Context", "Bounded Context del Microservicio de Inventario de Aviones", "NodeJS (NestJS)");
+            Container vaccinesInventoryContext = monitoringSystem.AddContainer("Security Context", "Bounded Context del Microservicio de Inventario de Vacunas", "NodeJS (NestJS)");
+            Container monitoringContext = monitoringSystem.AddContainer("Payments Context", "Bounded Context del Microservicio de Monitoreo en tiempo real del status y ubicación del vuelo que transporta las vacunas", "NodeJS (NestJS)");
             Container database = monitoringSystem.AddContainer("Database", "", "Oracle");
             
             cliente.Uses(mobileApplication, "Consulta");
@@ -109,14 +109,12 @@ namespace c4_model_design
             webApplication.Uses(apiRest, "API Request", "JSON/HTTPS");
 
             apiRest.Uses(flightPlanningContext, "", "");
-            apiRest.Uses(airportContext, "", "");
-            apiRest.Uses(aircraftInventoryContext, "", "");
+   
             apiRest.Uses(vaccinesInventoryContext, "", "");
             apiRest.Uses(monitoringContext, "", "");
             
             flightPlanningContext.Uses(database, "", "JDBC");
-            airportContext.Uses(database, "", "JDBC");
-            aircraftInventoryContext.Uses(database, "", "JDBC");
+    
             vaccinesInventoryContext.Uses(database, "", "JDBC");
             monitoringContext.Uses(database, "", "JDBC");
             
@@ -135,8 +133,7 @@ namespace c4_model_design
             apiRest.AddTags("APIRest");
             database.AddTags("Database");
             flightPlanningContext.AddTags("FlightPlanningContext");
-            airportContext.AddTags("AirportContext");
-            aircraftInventoryContext.AddTags("AircraftInventoryContext");
+      
             vaccinesInventoryContext.AddTags("VaccinesInventoryContext");
             monitoringContext.AddTags("MonitoringContext");
 
