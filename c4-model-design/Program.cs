@@ -95,6 +95,9 @@ namespace c4_model_design
             Container vaccinesInventoryContext = monitoringSystem.AddContainer("Security Context", "Bounded Context del Microservicio de Inventario de Vacunas", "NodeJS (NestJS)");
             Container monitoringContext = monitoringSystem.AddContainer("Payments Context", "Bounded Context del Microservicio de Monitoreo en tiempo real del status y ubicación del vuelo que transporta las vacunas", "NodeJS (NestJS)");
             Container database = monitoringSystem.AddContainer("Database", "", "Oracle");
+            Container databasePayment = monitoringSystem.AddContainer("DatabasePayment", "", "Oracle");
+            Container databaseSecurity = monitoringSystem.AddContainer("Database Security", "", "Oracle");
+
             
             cliente.Uses(mobileApplication, "Consulta");
             cliente.Uses(webApplication, "Consulta");
@@ -113,9 +116,9 @@ namespace c4_model_design
             apiRest.Uses(vaccinesInventoryContext, "", "");
             apiRest.Uses(monitoringContext, "", "");
             
-            flightPlanningContext.Uses(database, "", "JDBC");
+            flightPlanningContext.Uses(databasePayment, "", "JDBC");
     
-            vaccinesInventoryContext.Uses(database, "", "JDBC");
+            vaccinesInventoryContext.Uses(databaseSecurity, "", "JDBC");
             monitoringContext.Uses(database, "", "JDBC");
             
             monitoringContext.Uses(riders, "API Request", "JSON/HTTPS");
@@ -132,6 +135,10 @@ namespace c4_model_design
             landingPage.AddTags("LandingPage");
             apiRest.AddTags("APIRest");
             database.AddTags("Database");
+            databaseSecurity.AddTags("Database");
+            databasePayment.AddTags("Database");
+
+
             flightPlanningContext.AddTags("FlightPlanningContext");
       
             vaccinesInventoryContext.AddTags("VaccinesInventoryContext");
@@ -168,8 +175,8 @@ namespace c4_model_design
             monitoringApplicationService.Uses(flightRepository, "", "JDBC");
             monitoringApplicationService.Uses(vaccineLoteRepository, "", "JDBC");
             monitoringApplicationService.Uses(locationRepository, "", "JDBC");
-            flightRepository.Uses(database, "", "JDBC");
-            vaccineLoteRepository.Uses(database, "", "JDBC");
+            flightRepository.Uses(databasePayment, "", "JDBC");
+            vaccineLoteRepository.Uses(databaseSecurity, "", "JDBC");
             locationRepository.Uses(database, "", "JDBC");
             locationRepository.Uses(riders, "", "JSON/HTTPS");
             aircraftSystemFacade.Uses(cabs, "JSON/HTTPS");
@@ -203,6 +210,8 @@ namespace c4_model_design
             componentView.Add(webApplication);
             componentView.Add(apiRest);
             componentView.Add(database);
+            componentView.Add(databaseSecurity);
+            componentView.Add(databasePayment);
             componentView.Add(cabs);
             componentView.Add(disco);
             componentView.Add(almacenamiento);
