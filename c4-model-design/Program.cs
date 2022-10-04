@@ -161,12 +161,12 @@ namespace c4_model_design
 
             // 3. Diagrama de Componentes
             Component domainLayer = monitoringContext.AddComponent("Domain Layer", "", "NodeJS (NestJS)");
-            Component monitoringController = monitoringContext.AddComponent("Monitoring Controller", "REST API endpoints de monitoreo.", "NodeJS (NestJS) REST Controller");
-            Component monitoringApplicationService = monitoringContext.AddComponent("Monitoring Application Service", "Provee métodos para el monitoreo, pertenece a la capa Application de DDD", "NestJS Component");
-            Component flightRepository = monitoringContext.AddComponent("Flight Repository", "Información del vuelo", "NestJS Component");
-            Component vaccineLoteRepository = monitoringContext.AddComponent("VaccineLote Repository", "Información de lote de vacunas", "NestJS Component");
+            Component monitoringController = monitoringContext.AddComponent("Riders Controller", "REST API endpoints de monitoreo.", "NodeJS (NestJS) REST Controller");
+            Component monitoringApplicationService = monitoringContext.AddComponent("Riders Service", "Provee métodos para el monitoreo, pertenece a la capa Application de DDD", "NestJS Component");
+            Component flightRepository = monitoringContext.AddComponent("Transaction Repository", "Información del vuelo", "NestJS Component");
+            Component vaccineLoteRepository = monitoringContext.AddComponent("Procces Repository", "Información de lote de vacunas", "NestJS Component");
             Component locationRepository = monitoringContext.AddComponent("Location Repository", "Ubicación del vuelo", "NestJS Component");
-            Component aircraftSystemFacade = monitoringContext.AddComponent("Aircraft System Facade", "", "NestJS Component");
+            Component aircraftSystemFacade = monitoringContext.AddComponent("Broker Repository", "", "NestJS Component");
 
             apiRest.Uses(monitoringController, "", "JSON/HTTPS");
             monitoringController.Uses(monitoringApplicationService, "Invoca métodos de monitoreo");
