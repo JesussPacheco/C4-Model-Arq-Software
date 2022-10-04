@@ -94,8 +94,8 @@ namespace c4_model_design
            // Container aircraftInventoryContext = monitoringSystem.AddContainer("Aircraft Inventory Context", "Bounded Context del Microservicio de Inventario de Aviones", "NodeJS (NestJS)");
             Container vaccinesInventoryContext = monitoringSystem.AddContainer("Security Context", "Bounded Context del Microservicio de Inventario de Vacunas", "NodeJS (NestJS)");
             Container monitoringContext = monitoringSystem.AddContainer("Payments Context", "Bounded Context del Microservicio de Monitoreo en tiempo real del status y ubicación del vuelo que transporta las vacunas", "NodeJS (NestJS)");
-            Container database = monitoringSystem.AddContainer("Database", "", "Oracle");
-            Container databasePayment = monitoringSystem.AddContainer("DatabasePayment", "", "Oracle");
+            Container database = monitoringSystem.AddContainer("Database Core ", "", "Oracle");
+            Container databasePayment = monitoringSystem.AddContainer("Database Payment", "", "Oracle");
             Container databaseSecurity = monitoringSystem.AddContainer("Database Security", "", "Oracle");
 
             
