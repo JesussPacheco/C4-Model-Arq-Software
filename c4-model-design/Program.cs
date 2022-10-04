@@ -25,10 +25,10 @@ namespace c4_model_design
             SoftwareSystem monitoringSystem = model.AddSoftwareSystem("UBER", "mantener un servicio optimizado que haga coincidir las necesidades de losclientes con los proveedores de servicio de transporte");
             SoftwareSystem riders = model.AddSoftwareSystem("Riders", "Servicio de gestión de demanda de pasajeros (Riders)");
             SoftwareSystem cabs = model.AddSoftwareSystem("Cabs", "Servicio de gestión de oferta de conductores");
-            SoftwareSystem disco = model.AddSoftwareSystem("Disco", "Servicio de despacho operacional");
-            SoftwareSystem s3 = model.AddSoftwareSystem("S3", "Servicio de despacho operacional");
-            SoftwareSystem almacenamiento = model.AddSoftwareSystem("Almacenamiento", "Servicio de despacho operacional");
-            SoftwareSystem externo = model.AddSoftwareSystem("Servicios Externos", "Servicio de despacho operacional");
+            SoftwareSystem disco = model.AddSoftwareSystem("Disco", "Servicio de reduccion de consumo");
+            SoftwareSystem s3 = model.AddSoftwareSystem("S3", "Servicio de calculo de distancia");
+            SoftwareSystem almacenamiento = model.AddSoftwareSystem("Almacenamiento", "Almacenamiento de informacion");
+            SoftwareSystem externo = model.AddSoftwareSystem("Servicios Externos", "Servicio de pagos ");
             
 
 
@@ -37,16 +37,16 @@ namespace c4_model_design
             Person conductor = model.AddPerson("Conductor", "Conductor peruano.");
 
             
-            cliente.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
-            conductor.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
+            cliente.Uses(monitoringSystem, "Realizan pedidos de taxis");
+            conductor.Uses(monitoringSystem, "Realizan viajes para clientes");
 
-            monitoringSystem.Uses(cabs, "Consulta información en tiempo real por el avión del vuelo");
+            monitoringSystem.Uses(cabs, "Este servicio tiene varias instancias de un microservicio que registra la geolocalización de los conductores cada4 segundos para hacer coincidir la ubicación del pasajero con los conductores más cercanos que tengan alcanceal lugar de destino. La información se deja en un broker Apache Kafka que va registrando la geolocalización delconductor en tiempo real. ");
             monitoringSystem.Uses(disco, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
             monitoringSystem.Uses(riders, "Usa la API de google maps");
-            monitoringSystem.Uses(disco, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
-            monitoringSystem.Uses(s3, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
-            monitoringSystem.Uses(almacenamiento, "Usa la API de google maps");
-            monitoringSystem.Uses(externo, "Usa la API de google maps");
+            monitoringSystem.Uses(disco, "Este microservicio se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacerla oferta de servicios para que sea tomada por el conductor. ");
+            monitoringSystem.Uses(s3, "calcula ladistancia del pasajero a los conductores más cercanos");
+            monitoringSystem.Uses(almacenamiento, "bases de datos deben tener capacidad para escalar horizontalmente, de esta manera Uber puede agregarmás servidores.");
+            monitoringSystem.Uses(externo, "Se utiliza servicios de pago con Paypal, Mastercard, Visa y los servicios de Google Maps para haceractualizaciones a la red S3 de Uber");
 
             
             SystemContextView contextView = viewSet.CreateSystemContextView(monitoringSystem, "Contexto", "Diagrama de contexto");
@@ -154,7 +154,6 @@ namespace c4_model_design
             styles.Add(new ElementStyle("AircraftInventoryContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
             styles.Add(new ElementStyle("VaccinesInventoryContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
             styles.Add(new ElementStyle("MonitoringContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
-
             ContainerView containerView = viewSet.CreateContainerView(monitoringSystem, "Contenedor", "Diagrama de contenedores");
             contextView.PaperSize = PaperSize.A4_Landscape;
             containerView.AddAllElements();
