@@ -75,19 +75,19 @@ namespace c4_model_design
             styles.Add(new ElementStyle("Conductor") { Background = "#B22222", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle("SistemaMonitoreo") { Background = "#008f39", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Riders") { Background = "#CD5C5C", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("Cabs") { Background = "#32CD32", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Cabs") { Background = "#4682B4", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Disco") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("S3") { Background = "#FFA07A", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("Almacenamiento") { Background = "#FF00FF", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Almacenamiento") { Background = "#32CD32", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("ServiciosExternos") { Background = "#FFB6C1", Color = "#ffffff", Shape = Shape.RoundedBox });
 
 
 
 
             // 2. Diagrama de Contenedores
-            Container mobileApplication = monitoringSystem.AddContainer("Mobile App", "Permite a los usuarios visualizar un dashboard con el resumen de toda la información del traslado de los lotes de vacunas.", "Flutter");
-            Container webApplication = monitoringSystem.AddContainer("Web App", "Permite a los usuarios visualizar un dashboard con el resumen de toda la información del traslado de los lotes de vacunas.", "Flutter Web");
-            Container landingPage = monitoringSystem.AddContainer("Landing Page", "", "Flutter Web");
+            Container mobileApplication = monitoringSystem.AddContainer("APP Pasajeros", "app para los pasajeros", "Java y Scala");
+            Container webApplication = monitoringSystem.AddContainer("App Conductores", "app para los conductores.", "Java y Scala");
+            Container landingPage = monitoringSystem.AddContainer("Centro de activación presencial", "", "Python");
             Container apiRest = monitoringSystem.AddContainer("API Rest", "API Rest", "NodeJS (NestJS) port 8080");
             Container flightPlanningContext = monitoringSystem.AddContainer("Flight Planning Context", "Bounded Context del Microservicio de Planificación de Vuelos", "NodeJS (NestJS)");
             Container airportContext = monitoringSystem.AddContainer("Airport Context", "Bounded Context del Microservicio de información de Aeropuertos", "NodeJS (NestJS)");
@@ -141,7 +141,7 @@ namespace c4_model_design
             monitoringContext.AddTags("MonitoringContext");
 
             styles.Add(new ElementStyle("MobileApp") { Background = "#9d33d6", Color = "#ffffff", Shape = Shape.MobileDevicePortrait, Icon = "" });
-            styles.Add(new ElementStyle("WebApp") { Background = "#9d33d6", Color = "#ffffff", Shape = Shape.WebBrowser, Icon = "" });
+            styles.Add(new ElementStyle("WebApp") { Background = "#00FFFF", Color = "#ffffff", Shape = Shape.MobileDevicePortrait, Icon = "" });
             styles.Add(new ElementStyle("LandingPage") { Background = "#929000", Color = "#ffffff", Shape = Shape.WebBrowser, Icon = "" });
             styles.Add(new ElementStyle("APIRest") { Shape = Shape.RoundedBox, Background = "#0000ff", Color = "#ffffff", Icon = "" });
             styles.Add(new ElementStyle("Database") { Shape = Shape.Cylinder, Background = "#ff0000", Color = "#ffffff", Icon = "" });
