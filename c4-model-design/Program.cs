@@ -23,7 +23,7 @@ namespace c4_model_design
 
             // 1. Diagrama de Contexto
             SoftwareSystem monitoringSystem = model.AddSoftwareSystem("UBER", "mantener un servicio optimizado que haga coincidir las necesidades de losclientes con los proveedores de servicio de transporte");
-            SoftwareSystem googleMaps = model.AddSoftwareSystem("Google Maps", "Plataforma que ofrece una REST API de información geo referencial.");
+            SoftwareSystem riders = model.AddSoftwareSystem("Riders", "Servicio de gestión de demanda de pasajeros (Riders)");
             SoftwareSystem aircraftSystem = model.AddSoftwareSystem("Aircraft System", "Permite transmitir información en tiempo real por el avión del vuelo a nuestro sistema");
 
             Person cliente = model.AddPerson("Cliente", "Cliente peruano.");
@@ -34,7 +34,7 @@ namespace c4_model_design
             conductor.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
 
             monitoringSystem.Uses(aircraftSystem, "Consulta información en tiempo real por el avión del vuelo");
-            monitoringSystem.Uses(googleMaps, "Usa la API de google maps");
+            monitoringSystem.Uses(riders, "Usa la API de google maps");
             
             SystemContextView contextView = viewSet.CreateSystemContextView(monitoringSystem, "Contexto", "Diagrama de contexto");
             contextView.PaperSize = PaperSize.A4_Landscape;
@@ -46,14 +46,14 @@ namespace c4_model_design
             conductor.AddTags("Conductor");
 
             monitoringSystem.AddTags("SistemaMonitoreo");
-            googleMaps.AddTags("GoogleMaps");
+            riders.AddTags("Riders");
             aircraftSystem.AddTags("AircraftSystem");
 
             Styles styles = viewSet.Configuration.Styles;
             styles.Add(new ElementStyle("Cliente") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle("Conductor") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle("SistemaMonitoreo") { Background = "#008f39", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("GoogleMaps") { Background = "#90714c", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Riders") { Background = "#90714c", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("AircraftSystem") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
 
             // 2. Diagrama de Contenedores
@@ -92,7 +92,7 @@ namespace c4_model_design
             vaccinesInventoryContext.Uses(database, "", "JDBC");
             monitoringContext.Uses(database, "", "JDBC");
             
-            monitoringContext.Uses(googleMaps, "API Request", "JSON/HTTPS");
+            monitoringContext.Uses(riders, "API Request", "JSON/HTTPS");
             monitoringContext.Uses(aircraftSystem, "API Request", "JSON/HTTPS");
 
             // Tags
@@ -141,7 +141,7 @@ namespace c4_model_design
             flightRepository.Uses(database, "", "JDBC");
             vaccineLoteRepository.Uses(database, "", "JDBC");
             locationRepository.Uses(database, "", "JDBC");
-            locationRepository.Uses(googleMaps, "", "JSON/HTTPS");
+            locationRepository.Uses(riders, "", "JSON/HTTPS");
             aircraftSystemFacade.Uses(aircraftSystem, "JSON/HTTPS");
             
             // Tags
@@ -170,7 +170,7 @@ namespace c4_model_design
             componentView.Add(apiRest);
             componentView.Add(database);
             componentView.Add(aircraftSystem);
-            componentView.Add(googleMaps);
+            componentView.Add(riders);
             componentView.AddAllComponents();
 
             structurizrClient.UnlockWorkspace(workspaceId);
