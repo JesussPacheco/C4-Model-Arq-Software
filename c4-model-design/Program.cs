@@ -61,7 +61,7 @@ namespace c4_model_design
             monitoringSystem.AddTags("SistemaMonitoreo");
             riders.AddTags("Riders");
             cabs.AddTags("Cabs");
-            disco.AddTags("Cabs");
+            disco.AddTags("Disco");
             almacenamiento.AddTags("Almacenamiento");
             s3.AddTags("S3");
             externo.AddTags("ServiciosExternos");
@@ -72,14 +72,14 @@ namespace c4_model_design
 
             Styles styles = viewSet.Configuration.Styles;
             styles.Add(new ElementStyle("Cliente") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
-            styles.Add(new ElementStyle("Conductor") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
+            styles.Add(new ElementStyle("Conductor") { Background = "#B22222", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle("SistemaMonitoreo") { Background = "#008f39", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("Riders") { Background = "#90714c", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("Cabs") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Riders") { Background = "#CD5C5C", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Cabs") { Background = "#32CD32", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Disco") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("S3") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("Almacenamiento") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("ServiciosExternos") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("S3") { Background = "#FFA07A", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Almacenamiento") { Background = "#FF00FF", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("ServiciosExternos") { Background = "#FFB6C1", Color = "#ffffff", Shape = Shape.RoundedBox });
 
 
 
