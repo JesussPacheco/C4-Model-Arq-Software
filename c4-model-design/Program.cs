@@ -28,6 +28,9 @@ namespace c4_model_design
             SoftwareSystem disco = model.AddSoftwareSystem("Disco", "Servicio de despacho operacional");
             SoftwareSystem s3 = model.AddSoftwareSystem("S3", "Servicio de despacho operacional");
             SoftwareSystem almacenamiento = model.AddSoftwareSystem("Almacenamiento", "Servicio de despacho operacional");
+            SoftwareSystem externo = model.AddSoftwareSystem("Servicios Externos", "Servicio de despacho operacional");
+            
+
 
 
             Person cliente = model.AddPerson("Cliente", "Cliente peruano.");
@@ -42,7 +45,9 @@ namespace c4_model_design
             monitoringSystem.Uses(riders, "Usa la API de google maps");
             monitoringSystem.Uses(disco, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
             monitoringSystem.Uses(s3, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
-            monitoringSystem.Uses(riders, "Usa la API de google maps");
+            monitoringSystem.Uses(almacenamiento, "Usa la API de google maps");
+            monitoringSystem.Uses(externo, "Usa la API de google maps");
+
             
             SystemContextView contextView = viewSet.CreateSystemContextView(monitoringSystem, "Contexto", "Diagrama de contexto");
             contextView.PaperSize = PaperSize.A4_Landscape;
@@ -57,7 +62,10 @@ namespace c4_model_design
             riders.AddTags("Riders");
             cabs.AddTags("Cabs");
             disco.AddTags("Cabs");
+            almacenamiento.AddTags("Almacenamiento");
             s3.AddTags("S3");
+            externo.AddTags("ServiciosExternos");
+
 
 
             
@@ -70,6 +78,10 @@ namespace c4_model_design
             styles.Add(new ElementStyle("Cabs") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Disco") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("S3") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Almacenamiento") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("ServiciosExternos") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+
+
 
 
             // 2. Diagrama de Contenedores
@@ -111,7 +123,10 @@ namespace c4_model_design
             monitoringContext.Uses(riders, "API Request", "JSON/HTTPS");
             monitoringContext.Uses(cabs, "API Request", "JSON/HTTPS");
             monitoringContext.Uses(disco, "API Request", "JSON/HTTPS");
+            monitoringContext.Uses(almacenamiento, "API Request", "JSON/HTTPS");
             monitoringContext.Uses(s3, "API Request", "JSON/HTTPS");
+            monitoringContext.Uses(externo, "API Request", "JSON/HTTPS");
+
 
             // Tags
             mobileApplication.AddTags("MobileApp");
@@ -162,7 +177,10 @@ namespace c4_model_design
             locationRepository.Uses(riders, "", "JSON/HTTPS");
             aircraftSystemFacade.Uses(cabs, "JSON/HTTPS");
             aircraftSystemFacade.Uses(disco, "JSON/HTTPS");
+            aircraftSystemFacade.Uses(almacenamiento, "JSON/HTTPS");
             aircraftSystemFacade.Uses(s3, "JSON/HTTPS");
+            aircraftSystemFacade.Uses(externo, "JSON/HTTPS");
+
             // Tags
             domainLayer.AddTags("DomainLayer");
             monitoringController.AddTags("MonitoringController");
@@ -190,10 +208,11 @@ namespace c4_model_design
             componentView.Add(database);
             componentView.Add(cabs);
             componentView.Add(disco);
+            componentView.Add(almacenamiento);
             componentView.Add(s3);
+            componentView.Add(externo);
             componentView.Add(riders);
             componentView.AddAllComponents();
-
             structurizrClient.UnlockWorkspace(workspaceId);
             structurizrClient.PutWorkspace(workspaceId, workspace);
         }
