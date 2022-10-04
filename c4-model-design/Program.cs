@@ -12,12 +12,12 @@ namespace c4_model_design
 
         static void Banking()
         {
-            const long workspaceId = 0;
-            const string apiKey = "";
-            const string apiSecret = "";
+            const long workspaceId = 77061;
+            const string apiKey = "a698b5a1-a882-4014-a0a7-5a325480776f";
+            const string apiSecret = "12d49412-cff2-4297-95ac-20ef759dffb4";
 
             StructurizrClient structurizrClient = new StructurizrClient(apiKey, apiSecret);
-            Workspace workspace = new Workspace("Software Design & Patterns - C4 Model - Sistema de Monitoreo", "Sistema de Monitoreo del Traslado Aéreo de Vacunas SARS-CoV-2");
+            Workspace workspace = new Workspace("Parcial Arq Sofware", "Softwware Architecture");
             ViewSet viewSet = workspace.Views;
             Model model = workspace.Model;
 
