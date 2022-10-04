@@ -22,13 +22,17 @@ namespace c4_model_design
             Model model = workspace.Model;
 
             // 1. Diagrama de Contexto
-            SoftwareSystem monitoringSystem = model.AddSoftwareSystem("Monitoreo del Traslado Aéreo de Vacunas SARS-CoV-2", "Permite el seguimiento y monitoreo del traslado aéreo a nuestro país de las vacunas para la COVID-19.");
+            SoftwareSystem monitoringSystem = model.AddSoftwareSystem("UBER", "mantener un servicio optimizado que haga coincidir las necesidades de losclientes con los proveedores de servicio de transporte");
             SoftwareSystem googleMaps = model.AddSoftwareSystem("Google Maps", "Plataforma que ofrece una REST API de información geo referencial.");
             SoftwareSystem aircraftSystem = model.AddSoftwareSystem("Aircraft System", "Permite transmitir información en tiempo real por el avión del vuelo a nuestro sistema");
 
-            Person ciudadano = model.AddPerson("Ciudadano", "Ciudadano peruano.");
+            Person cliente = model.AddPerson("Cliente", "Cliente peruano.");
+            Person conductor = model.AddPerson("Conductor", "Conductor peruano.");
+
             
-            ciudadano.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
+            cliente.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
+            conductor.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
+
             monitoringSystem.Uses(aircraftSystem, "Consulta información en tiempo real por el avión del vuelo");
             monitoringSystem.Uses(googleMaps, "Usa la API de google maps");
             
@@ -38,13 +42,16 @@ namespace c4_model_design
             contextView.AddAllPeople();
 
             // Tags
-            ciudadano.AddTags("Ciudadano");
+            cliente.AddTags("Cliente");
+            conductor.AddTags("Conductor");
+
             monitoringSystem.AddTags("SistemaMonitoreo");
             googleMaps.AddTags("GoogleMaps");
             aircraftSystem.AddTags("AircraftSystem");
 
             Styles styles = viewSet.Configuration.Styles;
-            styles.Add(new ElementStyle("Ciudadano") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
+            styles.Add(new ElementStyle("Cliente") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
+            styles.Add(new ElementStyle("Conductor") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle("SistemaMonitoreo") { Background = "#008f39", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("GoogleMaps") { Background = "#90714c", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("AircraftSystem") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
@@ -61,9 +68,14 @@ namespace c4_model_design
             Container monitoringContext = monitoringSystem.AddContainer("Monitoring Context", "Bounded Context del Microservicio de Monitoreo en tiempo real del status y ubicación del vuelo que transporta las vacunas", "NodeJS (NestJS)");
             Container database = monitoringSystem.AddContainer("Database", "", "Oracle");
             
-            ciudadano.Uses(mobileApplication, "Consulta");
-            ciudadano.Uses(webApplication, "Consulta");
-            ciudadano.Uses(landingPage, "Consulta");
+            cliente.Uses(mobileApplication, "Consulta");
+            cliente.Uses(webApplication, "Consulta");
+            cliente.Uses(landingPage, "Consulta");
+            
+            conductor.Uses(mobileApplication, "Consulta");
+            conductor.Uses(webApplication, "Consulta");
+            conductor.Uses(landingPage, "Consulta");
+            
 
             mobileApplication.Uses(apiRest, "API Request", "JSON/HTTPS");
             webApplication.Uses(apiRest, "API Request", "JSON/HTTPS");
