@@ -24,7 +24,11 @@ namespace c4_model_design
             // 1. Diagrama de Contexto
             SoftwareSystem monitoringSystem = model.AddSoftwareSystem("UBER", "mantener un servicio optimizado que haga coincidir las necesidades de losclientes con los proveedores de servicio de transporte");
             SoftwareSystem riders = model.AddSoftwareSystem("Riders", "Servicio de gestión de demanda de pasajeros (Riders)");
-            SoftwareSystem aircraftSystem = model.AddSoftwareSystem("Aircraft System", "Permite transmitir información en tiempo real por el avión del vuelo a nuestro sistema");
+            SoftwareSystem cabs = model.AddSoftwareSystem("Cabs", "Servicio de gestión de oferta de conductores");
+            SoftwareSystem disco = model.AddSoftwareSystem("Disco", "Servicio de despacho operacional");
+            SoftwareSystem s3 = model.AddSoftwareSystem("S3", "Servicio de despacho operacional");
+            SoftwareSystem almacenamiento = model.AddSoftwareSystem("Almacenamiento", "Servicio de despacho operacional");
+
 
             Person cliente = model.AddPerson("Cliente", "Cliente peruano.");
             Person conductor = model.AddPerson("Conductor", "Conductor peruano.");
@@ -33,7 +37,11 @@ namespace c4_model_design
             cliente.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
             conductor.Uses(monitoringSystem, "Realiza consultas para mantenerse al tanto de la planificación de los vuelos hasta la llegada del lote de vacunas al Perú");
 
-            monitoringSystem.Uses(aircraftSystem, "Consulta información en tiempo real por el avión del vuelo");
+            monitoringSystem.Uses(cabs, "Consulta información en tiempo real por el avión del vuelo");
+            monitoringSystem.Uses(disco, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
+            monitoringSystem.Uses(riders, "Usa la API de google maps");
+            monitoringSystem.Uses(disco, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
+            monitoringSystem.Uses(s3, "se encarga de minimizar tiempo de espera, reducir la conducción extra y reducir consumopara el conductor. La función principal es identificar al cliente con la lista de conductores más cercanos y hacer la oferta de servicios para que sea tomada por el conductor");
             monitoringSystem.Uses(riders, "Usa la API de google maps");
             
             SystemContextView contextView = viewSet.CreateSystemContextView(monitoringSystem, "Contexto", "Diagrama de contexto");
@@ -47,14 +55,22 @@ namespace c4_model_design
 
             monitoringSystem.AddTags("SistemaMonitoreo");
             riders.AddTags("Riders");
-            aircraftSystem.AddTags("AircraftSystem");
+            cabs.AddTags("Cabs");
+            disco.AddTags("Cabs");
+            s3.AddTags("S3");
+
+
+            
 
             Styles styles = viewSet.Configuration.Styles;
             styles.Add(new ElementStyle("Cliente") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle("Conductor") { Background = "#0a60ff", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle("SistemaMonitoreo") { Background = "#008f39", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Riders") { Background = "#90714c", Color = "#ffffff", Shape = Shape.RoundedBox });
-            styles.Add(new ElementStyle("AircraftSystem") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Cabs") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Disco") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("S3") { Background = "#2f95c7", Color = "#ffffff", Shape = Shape.RoundedBox });
+
 
             // 2. Diagrama de Contenedores
             Container mobileApplication = monitoringSystem.AddContainer("Mobile App", "Permite a los usuarios visualizar un dashboard con el resumen de toda la información del traslado de los lotes de vacunas.", "Flutter");
@@ -93,7 +109,9 @@ namespace c4_model_design
             monitoringContext.Uses(database, "", "JDBC");
             
             monitoringContext.Uses(riders, "API Request", "JSON/HTTPS");
-            monitoringContext.Uses(aircraftSystem, "API Request", "JSON/HTTPS");
+            monitoringContext.Uses(cabs, "API Request", "JSON/HTTPS");
+            monitoringContext.Uses(disco, "API Request", "JSON/HTTPS");
+            monitoringContext.Uses(s3, "API Request", "JSON/HTTPS");
 
             // Tags
             mobileApplication.AddTags("MobileApp");
@@ -142,8 +160,9 @@ namespace c4_model_design
             vaccineLoteRepository.Uses(database, "", "JDBC");
             locationRepository.Uses(database, "", "JDBC");
             locationRepository.Uses(riders, "", "JSON/HTTPS");
-            aircraftSystemFacade.Uses(aircraftSystem, "JSON/HTTPS");
-            
+            aircraftSystemFacade.Uses(cabs, "JSON/HTTPS");
+            aircraftSystemFacade.Uses(disco, "JSON/HTTPS");
+            aircraftSystemFacade.Uses(s3, "JSON/HTTPS");
             // Tags
             domainLayer.AddTags("DomainLayer");
             monitoringController.AddTags("MonitoringController");
@@ -169,7 +188,9 @@ namespace c4_model_design
             componentView.Add(webApplication);
             componentView.Add(apiRest);
             componentView.Add(database);
-            componentView.Add(aircraftSystem);
+            componentView.Add(cabs);
+            componentView.Add(disco);
+            componentView.Add(s3);
             componentView.Add(riders);
             componentView.AddAllComponents();
 
